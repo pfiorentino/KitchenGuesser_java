@@ -25,11 +25,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "questions")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
-    @NamedQuery(name = "Questions.findById", query = "SELECT q FROM Questions q WHERE q.id = :id"),
-    @NamedQuery(name = "Questions.findByColumnIndex", query = "SELECT q FROM Questions q WHERE q.columnIndex = :columnIndex"),
-    @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question")})
-public class Questions implements Serializable {
+    @NamedQuery(name = "Question.findAll", query = "SELECT q FROM Question q"),
+    @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q WHERE q.id = :id"),
+    @NamedQuery(name = "Question.findByColumnIndex", query = "SELECT q FROM Question q WHERE q.columnIndex = :columnIndex"),
+    @NamedQuery(name = "Question.findByQuestion", query = "SELECT q FROM Question q WHERE q.question = :question")})
+public class Question implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,14 +42,14 @@ public class Questions implements Serializable {
     @Column(name = "question")
     private String question;
 
-    public Questions() {
+    public Question() {
     }
 
-    public Questions(Integer id) {
+    public Question(Integer id) {
         this.id = id;
     }
 
-    public Questions(Integer id, int columnIndex) {
+    public Question(Integer id, int columnIndex) {
         this.id = id;
         this.columnIndex = columnIndex;
     }
@@ -88,10 +88,10 @@ public class Questions implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Questions)) {
+        if (!(object instanceof Question)) {
             return false;
         }
-        Questions other = (Questions) object;
+        Question other = (Question) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -100,7 +100,7 @@ public class Questions implements Serializable {
 
     @Override
     public String toString() {
-        return "kitchenguesser.Questions[ id=" + id + " ]";
+        return "kitchenguesser.Question[ id=" + id + " ]";
     }
     
 }
