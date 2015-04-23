@@ -22,14 +22,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author paul
  */
 @Entity
-@Table(name = "questions")
+@Table(name = "things")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Question.findAll", query = "SELECT q FROM Question q"),
-    @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q WHERE q.id = :id"),
-    @NamedQuery(name = "Question.findByColumnIndex", query = "SELECT q FROM Question q WHERE q.columnIndex = :columnIndex"),
-    @NamedQuery(name = "Question.findByQuestion", query = "SELECT q FROM Question q WHERE q.question = :question")})
-public class Question implements Serializable {
+    @NamedQuery(name = "Things.findAll", query = "SELECT t FROM Things t"),
+    @NamedQuery(name = "Things.findById", query = "SELECT t FROM Things t WHERE t.id = :id"),
+    @NamedQuery(name = "Things.findByName", query = "SELECT t FROM Things t WHERE t.name = :name")})
+public class Things implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,21 +36,19 @@ public class Question implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "column_index")
-    private int columnIndex;
-    @Column(name = "question")
-    private String question;
+    @Column(name = "name")
+    private String name;
 
-    public Question() {
+    public Things() {
     }
 
-    public Question(Integer id) {
+    public Things(Integer id) {
         this.id = id;
     }
 
-    public Question(Integer id, int columnIndex) {
+    public Things(Integer id, String name) {
         this.id = id;
-        this.columnIndex = columnIndex;
+        this.name = name;
     }
 
     public Integer getId() {
@@ -62,20 +59,12 @@ public class Question implements Serializable {
         this.id = id;
     }
 
-    public int getColumnIndex() {
-        return columnIndex;
+    public String getName() {
+        return name;
     }
 
-    public void setColumnIndex(int columnIndex) {
-        this.columnIndex = columnIndex;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -88,10 +77,10 @@ public class Question implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Question)) {
+        if (!(object instanceof Things)) {
             return false;
         }
-        Question other = (Question) object;
+        Things other = (Things) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -100,7 +89,7 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return "kitchenguesser.Question[ id=" + id + " ]";
+        return "fr.epsi.i4.kitchenguesser.Things[ id=" + id + " ]";
     }
     
 }

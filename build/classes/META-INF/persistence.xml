@@ -4,6 +4,9 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>fr.epsi.i4.kitchenguesser.entities.Dataset</class>
     <class>fr.epsi.i4.kitchenguesser.entities.Question</class>
+    <class>fr.epsi.i4.kitchenguesser.entities.Questions</class>
+    <class>fr.epsi.i4.kitchenguesser.entities.Things</class>
+    <class>fr.epsi.i4.kitchenguesser.entities.ThingsQuestions</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://dev.tellmeplus.com:3306/paul_kitchenguesser?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="paul_cours"/>
