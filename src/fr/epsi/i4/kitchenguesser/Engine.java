@@ -11,6 +11,7 @@ import fr.epsi.i4.kitchenguesser.entities.ThingsQuestions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -37,6 +38,8 @@ public class Engine {
         //System.out.println(getDataset().getNom());
         
         System.out.println(things);
+        
+        System.out.println(getBestQuestion());
     }
     
     private Questions getFirstQuestion(){
@@ -46,6 +49,24 @@ public class Engine {
         int firstQuestion = (int) (Math.random()*(questions.size()-1));
         
         return questions.get(firstQuestion);
+    }
+    
+    private Question getBestQuestion() {
+        int maxScore = -1;
+        Question bestQuestion = null;
+        
+        for (Map.Entry<Integer, Question> entry : questions.entrySet()) {
+            int questionScore = getScore(entry.getKey());
+            
+            System.out.println(entry.getValue().toString()+": "+questionScore);
+            
+            if (maxScore < questionScore){
+                maxScore = questionScore;
+                bestQuestion = entry.getValue();
+            }
+        }
+        
+        return bestQuestion;
     }
     
     private void resetQuestions() {
@@ -75,5 +96,21 @@ public class Engine {
             
             things.put(bdThing.getId(), newThing);
         });
+    }
+    
+    private int getScore(int questionId){
+        int score = 1;
+        
+        int[] answers = {1,1,1,1,1,1};
+        
+        for (Map.Entry<Integer, Thing> entry : things.entrySet()) {
+            answers[entry.getValue().getAnswer(questionId)]++;
+        }
+        
+        for (int answer : answers) {
+            score *= answer;
+        }
+        
+        return score;
     }
 }

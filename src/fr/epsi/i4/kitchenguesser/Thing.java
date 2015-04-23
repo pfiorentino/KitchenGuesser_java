@@ -6,6 +6,7 @@
 package fr.epsi.i4.kitchenguesser;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -22,6 +23,10 @@ public class Thing {
     
     public void addAnswer(int questionId, int answer) {
         answers.put(questionId, answer);
+    }
+    
+    public int getAnswer(int questionId){
+        return answers.get(questionId);
     }
     
     @Override
