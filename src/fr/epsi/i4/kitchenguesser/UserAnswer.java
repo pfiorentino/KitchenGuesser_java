@@ -9,12 +9,12 @@ package fr.epsi.i4.kitchenguesser;
  *
  * @author paul
  */
-public class KitchenGuesser {
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
+public class UserAnswer {
+    private int questionId;
+    private int answer;
+    
+    public UserAnswer(int questionId, int answer){
+        this.questionId = questionId;
+        this.answer     = answer;
     }
 }

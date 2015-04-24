@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/fr/epsi/i4/kitchenguesser/Question.java</file>
+            <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/fr/epsi/i4/kitchenguesser/Thing.java</file>
             <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/fr/epsi/i4/kitchenguesser/KitchenGuesser.java</file>
-            <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/fr/epsi/i4/kitchenguesser/entities/Questions.java</file>
-            <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/META-INF/persistence.xml</file>
+            <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/fr/epsi/i4/kitchenguesser/UserAnswer.java</file>
+            <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/fr/epsi/i4/kitchenguesser/Game.java</file>
+            <file>file:/Users/paul/Workspaces/NetBeansProjects/KitchenGuesser/src/fr/epsi/i4/kitchenguesser/entities/ThingsQuestions.java</file>
         </group>
     </open-files>
 </project-private>

@@ -11,9 +11,15 @@ package fr.epsi.i4.kitchenguesser;
  */
 public class Question {
     private String question;
+    private int id;
     
-    public Question(String question) {
-        this.question = question;
+    public Question(int id, String question) {
+        this.id         = id;
+        this.question   = question;
+    }
+    
+    public int getId() {
+        return id;
     }
     
     @Override
