@@ -11,8 +11,9 @@ import java.util.HashMap;
  *
  * @author paul
  */
-public class Thing {
-    private final int[][] heuristic = {{3,1,0,-2,-3},{1,3,0,-1,-2},{0,0,0,0,0},{-2,-1,0,3,1},{-3,-2,0,1,3}};
+public class Thing implements Comparable<Thing> {
+    //private final int[][] heuristic = {{3,1,0,-2,-3},{1,3,0,-1,-2},{0,0,0,0,0},{-2,-1,0,3,1},{-3,-2,0,1,3}};
+    private final int[][] heuristic = {{3,3,0,-2,-3},{2,3,0,-1,-2},{0,0,0,0,0},{-2,-1,0,3,2},{-3,-2,0,3,3}};
     
     private String name;
     private HashMap<Integer, Integer> answers;
@@ -43,6 +44,11 @@ public class Thing {
     
     @Override
     public String toString(){
-        return this.name;
+        return this.name+"("+this.score+")";
+    }
+
+    @Override
+    public int compareTo(Thing o) {
+        return o.score - this.score;
     }
 }
