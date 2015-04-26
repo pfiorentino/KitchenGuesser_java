@@ -17,4 +17,17 @@ public class UserAnswer {
         this.questionId = questionId;
         this.answer     = answer;
     }
+    
+    public int getQuestionId() {
+        return this.questionId;
+    }
+    
+    public int getValue() {
+        return this.answer;
+    }
+    
+    @Override
+    public String toString() {
+        return "Question "+questionId+": "+answer;
+    }
 }

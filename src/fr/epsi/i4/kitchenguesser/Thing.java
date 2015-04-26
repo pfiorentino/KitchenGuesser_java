@@ -30,7 +30,11 @@ public class Thing implements Comparable<Thing> {
     }
     
     public int getAnswer(int questionId){
-        return this.answers.get(questionId);
+        if (this.answers.containsKey(questionId)){
+            return this.answers.get(questionId);
+        } else {
+            return 0;
+        }
     }
     
     public int getScore() {
@@ -38,8 +42,10 @@ public class Thing implements Comparable<Thing> {
     }
     
     public void updateScore(int questionId, int givenAnswer){
-        int expectedAnswer = answers.get(questionId);
-        score += heuristic[givenAnswer-1][expectedAnswer-1];
+        int expectedAnswer = getAnswer(questionId);
+        
+        if (expectedAnswer > 0)
+            score += heuristic[givenAnswer-1][expectedAnswer-1];
     }
     
     @Override

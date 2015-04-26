@@ -25,9 +25,7 @@ import javax.persistence.Query;
 public class Game {
     private static final int MIN_SCORE_TO_KEEP = -6;
     private static final int FIRST_QUESTION_TO_CLEAN = 3;
-    
-    private int next_purpose    = 10;
-    private int purpose_number  = 0;
+    private static final int MAX_QUESTIONS = 1;
     
     private EntityManager em;
     
@@ -46,8 +44,6 @@ public class Game {
         resetQuestions();
         resetThings();
         currentGame.clear();
-        next_purpose = 10;
-        purpose_number = 0;
     }
     
     public void start() {
@@ -82,27 +78,17 @@ public class Game {
                     questions.remove(question.getId());
                     question = getBestQuestion();
 
-                    System.out.println(things);
+                    //System.out.println(things);
 
                     float bestPrecision     = ((float) things.get(0).getScore()/(currentGame.size()*3))*100;
-                    float secondPrecision   = ((float) things.get(0).getScore()/(currentGame.size()*3))*100;
-
-    //                Thing[] bestThings = getBestThings();
-    //                float firstPrecision = ((float) bestThings[0].getScore()/(currentGame.size()*3))*100;
-    //                float secondPrecision = ((float) bestThings[1].getScore()/(currentGame.size()*3))*100;
-    //
-                    if ((currentGame.size() > 5 && currentGame.size() < next_purpose && bestPrecision-20 > secondPrecision) || currentGame.size() >= next_purpose){
+                    float secondPrecision   = ((float) things.get(1).getScore()/(currentGame.size()*3))*100;
+                    
+                    if (bestPrecision-20 > secondPrecision || currentGame.size() > MAX_QUESTIONS){
                         if (purposeAnswer(things.get(0), bestPrecision)){
                             input = "q";
                         } else {
-                            things.remove(0);
-                            
-                            if (questions.size() <= 3 || secondPrecision < 60 || purpose_number > 2){
-                                System.out.println("Désolé je n'ai pas trouvé à quoi vous pensez.");
-                                input = "q";
-                            } else {
-                                next_purpose = currentGame.size()+3;
-                            }
+                            //learn();
+                            input = "q";
                         }
                     }
                 }
@@ -137,8 +123,6 @@ public class Game {
     }
     
     private boolean purposeAnswer(Thing answer, float precision) {
-        purpose_number++;
-        
         Scanner scanner = new Scanner(System.in);
         String input = "";
         
@@ -154,6 +138,41 @@ public class Game {
         }
         
         return input.equals("y");
+    }
+    
+    public void learn() {
+        Query query = em.createNamedQuery("Things.search");
+        query.setParameter("keyword", "%fuiuiui%");
+        List<Things> bdThings = query.getResultList();
+        if (bdThings.size() >= 1){
+            System.out.println("J'ai trouvé des objets similaires :");
+            
+            int i = 0;
+            for (Things bdThing : bdThings) {
+                System.out.println(i+") "+bdThing.getName());
+                i++;
+            }
+            System.out.println(i+") Aucune des propositions ci-dessus");
+            System.out.println("Sélection :");
+        } else {
+            System.out.println("Aucun objet trouvé");
+            System.out.println(currentGame);
+            
+            Things newThing = new Things();
+            newThing.setName("Rouleau à patisserie");
+            persist(newThing);
+            
+            System.out.println("id: "+newThing.getId());
+            
+            for (UserAnswer answer : currentGame) {
+                ThingsQuestions tq = new ThingsQuestions();
+                tq.setQuestionId(answer.getQuestionId());
+                tq.setThingId(newThing.getId());
+                tq.setValue(answer.getValue());
+                
+                persist(tq);
+            }
+        }
     }
     
     private Question getRandomQuestion(){
@@ -177,27 +196,6 @@ public class Game {
         }
         
         return bestQuestion;
-    }
-    
-    private Thing[] getBestThings() {
-//        int bestScore = -1;
-//        Thing bestThing = null;
-//        Thing secondBestThing = null;
-//        
-//        for (Map.Entry<Integer, Thing> entry : things.entrySet()){
-//            if (bestScore <= entry.getValue().getScore()){
-//                secondBestThing = bestThing;
-//                
-//                bestScore = entry.getValue().getScore();
-//                bestThing = entry.getValue();
-//            }
-//        }
-//        
-//        Thing[] result = {bestThing, secondBestThing};
-//        
-//        return result;
-        
-        return null;
     }
     
     private void updateThingsScore(int questionId, int answer) {
@@ -253,7 +251,7 @@ public class Game {
         int[] answers = {1,1,1,1,1,1};
         
         for (Thing thing : things) {
-            if (thing.getScore() >= 0){
+            if (thing.getScore() >= 0 && thing.getAnswer(questionId) > 0){
                 answers[thing.getAnswer(questionId)]++;
             }
         }
@@ -263,5 +261,11 @@ public class Game {
         }
         
         return score;
+    }
+    
+    private void persist(Object entity){
+        em.getTransaction().begin();
+        em.persist(entity);
+        em.getTransaction().commit();
     }
 }
